@@ -1,0 +1,45 @@
+﻿@model List<BillerModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Billers</h1>
+    <div class = "card table-responsive">
+        <table class="table">
+            <tr>
+                <th>Biller Name</th>
+                <th>Amount To Pay</th>
+                <th>Transaction Type</th>
+            </tr>
+            <tbody>
+                @if (Model != null)
+                {
+                    @if (Model.Any())
+                    {
+                        @foreach (var data in Model)
+                        {
+                            <tr>
+                                <td>@data.biller_name</td>
+                                <td>@data.amount_to_pay</td>
+                                <td>@data.transaction_type</td>
+                            </tr>
+                        }
+                    }
+                }
+                else
+                {
+                    <tr><td scope="row" colspan="7">No records found</td></tr>
+                }
+            </tbody>
+        </table>
+        
+
+    </div>
+  
+</div>
+
+<div class="">
+    <h1 class="display-4">Payment</h1>
+
+</div>
