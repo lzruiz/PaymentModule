@@ -1,45 +1,159 @@
-﻿@model List<BillerModel>
+﻿@using PaymentModule.Models
+@model dynamic
 @{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Payment Module";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Billers</h1>
-    <div class = "card table-responsive">
-        <table class="table">
-            <tr>
-                <th>Biller Name</th>
-                <th>Amount To Pay</th>
-                <th>Transaction Type</th>
-            </tr>
-            <tbody>
-                @if (Model != null)
-                {
-                    @if (Model.Any())
-                    {
-                        @foreach (var data in Model)
-                        {
-                            <tr>
-                                <td>@data.biller_name</td>
-                                <td>@data.amount_to_pay</td>
-                                <td>@data.transaction_type</td>
-                            </tr>
-                        }
-                    }
-                }
-                else
-                {
-                    <tr><td scope="row" colspan="7">No records found</td></tr>
-                }
-            </tbody>
-        </table>
-        
+<div class="standard" align="left">
 
-    </div>
-  
+	<table class="borderless">
+		@if (Model != null)
+		{
+			@foreach (var data in Model.AccountModel)
+			{
+				<tbody>
+					<tr>
+						<th class=borderless align="right">Account Number:</th>
+						<td>@data.accountNumber</td>
+					</tr>
+					<tr>
+						<th class="borderless" align="right">Account Name:</th>
+						<td>@data.accountHolder</td>
+					</tr>
+					<tr>
+						<th class=borderless align="right">Address:</th>
+						<td>@data.customerAddress</td>
+					</tr>
+				</tbody>
+			}
+		}
+		else
+		{
+			<tr><td scope="row" colspan="2">No account found</td></tr>
+		}
+
+
+	</table>
 </div>
 
-<div class="">
-    <h1 class="display-4">Payment</h1>
 
+
+<div class="text-center">
+	<table class="table">
+
+
+		<tr>
+			<td style="border: 1px solid black;">
+				<form class="align-items-lg-stretch">
+					<input type="checkbox" id="selectAll" name="selectAll" value="All">
+				</form>
+			</td>
+			<th>BILLER NAME</th>
+			<th>AMOUNT TO PAY</th>
+			<th>TYPE</th>
+			<th>DOCUMENT NUMBER</th>
+			<th>Action</th>
+		</tr>
+
+
+		@foreach (var biller in Model.BillersModel)
+		{
+			<tr>
+				<td style="border: 1px solid black;">
+					<input type="checkbox" id="select1" name="select1" value="Aqualink">
+				</td>
+				<td>
+					<!-- display biller name derived from sql database -->
+					@biller.billerName
+				</td>
+				<td>
+					<!-- display amount to pay -->
+					
+					
+				</td>
+				<td>
+					<!-- selection of type using dropdown menu (derived from database)-->
+					<select name="transactionType" id="transactionType">
+						@foreach(var type in Model.TransactionType)
+						{
+							<option>@type.typeName</option>
+						}
+					</select>
+				</td>
+				
+				<td>
+					<!-- display document number -->
+					
+				</td>
+				<td>
+					<!-- Action breakdown (TESTING SUBMISSION THROUGH USER INPUT) -->
+					<input type="button" value="View Breakdown" />
+				</td>
+
+			
+			</tr>
+
+			<tr>
+
+				<td colspan="1"> </td>
+				<td colspan="5" align="left">Breakdown of Outstanding Balance of @biller.billerName</td>
+
+				<tr>
+					<td colspan="1"></td>
+					<td><input type="checkbox" id="selectAll" name="selectAll" value="All"></td>
+					<th>Payment Type</th>
+					<th>Amount</th>
+				</tr>
+
+				<tr>
+					<td colspan="1"></td>
+					<td><input type="checkbox" id="paymentType1" name="paymentType1" value=""></td>
+					<td>
+					<select name="paymentType1" id="paymentType1">
+							@foreach (var type in Model.PaymentType)
+							{
+							<option>@type.typeName</option>
+							}
+					</select>
+					</td>
+					<td>
+						<input type="text" id="amount1" name="amount1" value=""/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1"></td>
+					<td><input type="checkbox" id="paymentType2" name="paymentType2" value=""></td>
+					<td>
+					<select name="paymentType2" id="paymentType2">
+							@foreach (var type in Model.PaymentType)
+							{
+							<option>@type.typeName</option>
+							}
+					</select>
+					</td>
+					<td>
+						<input type="text" id="amount2" name="amount2" value=""/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1"></td>
+					<td><input type="checkbox" id="paymentType3" name="paymentType3" value=""></td>
+					<td>
+					<select name="paymentType3" id="paymentType3">
+							@foreach (var type in Model.PaymentType)
+							{
+							<option>@type.typeName</option>
+							}
+					</select>
+					</td>
+					<td>
+						<input type="text" id="amount3" name="amount3" value=""/>
+					</td>
+				</tr>
+			</tr>
+		}
+
+	</table>
+
+	<input type ="submit" id="submit" name="submit" value="PAY" />
 </div>
